@@ -10,13 +10,21 @@ class ProcessManager
     @processList.push(p)
   end
 
+  #  def each_process()
+  #    @processList.each() {|p| puts p}
+  #  end
+
   def each_process()
-    @processList.each() {|p| puts p}
+    @processList.each do |p|
+      yield p
+    end
   end
 
   def each_child_process(parent)
     childProcessList = @processList.find_all() {|p| p.parentId == parent.id}
-    puts childProcessList
+    childProcessList.each do |p|
+      yield p
+    end
   end
 
   def top_memory_consumers()
@@ -26,11 +34,11 @@ class ProcessManager
   end
 
   def memory()
-    @processList.each {|k| add(@processGroupedByName,k.name,k.memory_size)}
-    return @processGroupedByName 
+    @processList.each {|k| addToSet(@processGroupedByName,k.name,k.memory_size)}
+    return @processGroupedByName
   end
 
-  def add(set,key,value)
+  def addToSet(set,key,value)
     if set.include?(key)
       set[key] = set[key] + value
     else
