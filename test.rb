@@ -29,9 +29,10 @@ pm.addProcess(p10)
 pm.addProcess(p11)
 
 
-pm.each_process() 
+
+pm.each_process() {|p| puts p}
 puts "-----"
-pm.each_child_process(p1) 
+pm.each_child_process(p1) {|p| puts p}
 puts "-----"
 puts pm.memory()
 puts "-----"
