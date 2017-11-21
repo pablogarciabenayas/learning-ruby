@@ -12,7 +12,8 @@ p7 = Process_.new(8,3,"firefox",707)
 p8 = Process_.new(9,4,"pdf",808)
 p9 = Process_.new(10,5,"vlc",909)
 p10 = Process_.new(11,2,"eclipse",1010)
-p11 = Process_.new(12,2,"chrome",1010.01)
+p11 = Process_.new(12,7,"chrome",1010.01)
+p12 = Process_.new(13,12,"chrome",1010.01)
 
 pm = ProcessManager.new()
 pm.addProcess(p0)
@@ -27,12 +28,12 @@ pm.addProcess(p8)
 pm.addProcess(p9)
 pm.addProcess(p10)
 pm.addProcess(p11)
-
+pm.addProcess(p12)
 
 
 pm.each_process() {|p| puts p}
 puts "-----"
-pm.each_child_process(p1) {|p| puts p}
+pm.each_child_process(p0) {|p| puts p}
 puts "-----"
 puts pm.memory()
 puts "-----"
