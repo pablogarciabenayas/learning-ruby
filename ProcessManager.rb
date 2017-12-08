@@ -1,42 +1,42 @@
-require 'Process_'
+require 'Proceso'
 
 class ProcessManager
   def initialize
-    @processList = []
+    @process_list = []
   end
 
-  def addProcess(p)
-    @processList.push(p)
+  def add_process(p)
+    @process_list.push(p)
   end
 
   def each_process()
-    @processList.each do |p|
+    @process_list.each do |p|
       yield p
     end
   end
 
   def each_child_process(parent)
-    childProcessList = @processList.find_all() {|p| p.parentId == parent.id}
-    childProcessList.each do |p|
+    child_list = @process_list.find_all() {|p| p.parent_id == parent.id}
+    child_list.each do |p|
       yield p
-      each_child_process(p) do |other_p|
-        yield other_p
+      each_child_process(p) do |child_of_child|
+        yield child_of_child
       end 
     end
   end
 
   def top_memory_consumers()
-    topMemoryConsumers = @processList.sort()
-    return topMemoryConsumers.reverse()[0,10]
+    consumers_list = @process_list.sort()
+    return consumers_list.reverse()[0,10]
   end
 
   def memory()
-    processGroupedByName = Hash.new()
-    @processList.each {|k| addToSet(processGroupedByName,k.name,k.memory_size)}
-    return processGroupedByName
+    process_grouped_by_name = Hash.new()
+    @process_list.each {|p| add_to_set(process_grouped_by_name,p.name,p.memory_size)}
+    return process_grouped_by_name
   end
 
-  def addToSet(set,key,value)
+  def add_to_set(set,key,value)
     if set.include?(key)
       set[key] = set[key] + value
     else
